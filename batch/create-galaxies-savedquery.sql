@@ -1,0 +1,3 @@
+drop table if exists gravity.oozie_raw_galaxies;
+create external table gravity.oozie_raw_galaxies (galaxy_id STRING, galaxy_name STRING, galaxy_type STRING, distance_ly STRING, absolute_magnitude STRING, apparent_magnitude STRING, galaxy_group STRING) STORED AS PARQUET location '/user/saturn/raw/gravity/oozie_raw_galaxies';
+INSERT OVERWRITE TABLE gravity.oozie_galaxies select cast(galaxy_id as INT) galaxy_id, galaxy_name, galaxy_type, cast(distance_ly as decimal(20,10)) distance_ly, cast(absolute_magnitude as decimal(20,10)) absolute_magnitude, cast(apparent_magnitude as decimal(20,10)) apparent_magnitude, galaxy_group from gravity.oozie_raw_galaxies;
